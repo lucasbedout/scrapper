@@ -1,0 +1,69 @@
+
+/* RESET */
+
+
+*{
+	margin:0;
+	padding:0;
+	border:none;
+}
+
+
+/* LOADER */
+
+
+.loader{
+	display: none;
+	width:30px;
+	height:30px;
+	transition:all 0.2s ease;
+	margin:20px;
+}
+
+.loader.active{
+	display: block;
+}
+
+
+
+/* MESSAGE */
+
+
+.message{
+	display:none;
+	width:200px;
+	padding:20px;
+	text-align:center;
+	color:white;
+	font-family: "Arial";
+}
+
+.message.error{
+	display: block;
+	background-color:#e74c3c;
+}
+
+.message.success{
+	display: block;
+	background-color:#2ecc71;
+}
+
+/* PRODUCTS */
+
+#products h3 {
+	text-align: center;
+	margin: 20px;
+}
+
+#products img {
+	max-width: 200px;
+	margin: auto;
+	display: block;
+}
+
+#products em {
+	display: block;
+	text-align: center;
+	margin: 20px;
+	font-size: 14px;
+}

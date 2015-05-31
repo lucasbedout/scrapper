@@ -31,6 +31,8 @@ var Extract = function(data) {
             });
         });
 
+        products = _.sanitize(products);
+
         return callback(null, products);
 
     };
@@ -41,16 +43,17 @@ var Extract = function(data) {
             return null;
 
         var names = [];
-        if (Array.isArray(elem)) {
+        if (typeof elem === 'object') {
             $(elem).each(function(i, el) {
-                var tag = elem[0].name;
+                var tag = elem[0] ? elem[0].name : elem.name;
+                console.log('Tag', tag);
                 if (tag != 'meta') {
                     names.push($(el).text());
                 } else {
                     names.push($(el).attr('content'));
                 }
             });
-            return names;
+            return oneSevOrNull(names);
         } else {
             return $(elem).text();
         }
@@ -60,18 +63,17 @@ var Extract = function(data) {
     _.priceInfo = function(elem) {
         if (!elem)
             return null;
-
         var prices = [];
-        if (Array.isArray(elem)) {
+        if (typeof elem === 'object') {
             $(elem).each(function(i, el) {
-                var tag = elem[0].name;
+                var tag = elem[0] ? elem[0].name : elem.name;
                 if (tag != 'meta') {
                     prices.push(strToPrice($(el).text()));
                 } else {
                     prices.push(strToPrice($(el).attr('content')));
                 }
             });
-            return prices;
+            return oneSevOrNull(prices);
         } else {
             return strToPrice($(elem).text());
         }
@@ -90,14 +92,39 @@ var Extract = function(data) {
         if (Array.isArray(elem)) {
             $(elem).each(function(i, el) {
                 var link = $(el).attr('src');
-                if (pictures.indexOf(link) < 0)
+                if (link && pictures.indexOf(link) < 0 && link.indexOf('http://') >= 0)
                     pictures.push($(el).attr('src'));
             });
-            return pictures;
+            return oneSevOrNull(pictures);
         } else {
             return $(elem).attr('src');
         }
     };
+
+    // Used to find if we have product with the same name
+    _.sanitize = function(products) {
+        var sanitized = [];
+        products.forEach(function(product) {
+            var san = true;
+            // Remove current product from the test array
+            if (Array.isArray(product.name) && product.name.length > 3)
+                san = false;
+            if (san)
+                sanitized.push(product);
+        });
+        return sanitized;
+    };
+
+    // Return the array, a string or null
+    var oneSevOrNull = function(arr) {
+        if (arr.length === 0)
+            return null;
+        if (arr.length == 1) {
+            return arr[0];
+        }
+        return arr;
+    };
+
 };
 
 

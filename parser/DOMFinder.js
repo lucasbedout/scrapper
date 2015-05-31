@@ -40,9 +40,11 @@ var DOMFinder = function(dom) {
         // Does the page contains product(s)
         elements = _.getMatchingElements('product');
         // Arbitrary test, work on several websites
+
         if (elements.length < 10) {
             return false;
         }
+
         // Attempt to get product containers
         containers = findContainers(elements);
         if (containers.length === 0) {
@@ -259,9 +261,11 @@ var DOMFinder = function(dom) {
         var score = 0;
         attrs.forEach(function(attr) {
             var a =  $(elem).attr(attr);
+
             if (typeof a === typeof undefined || a === false) {
                 return false;
             }
+            a = a.toLowerCase();
             if (Array.isArray(slug)) {
                 slug.forEach(function(str) {
                     return a.indexOf(str) !== -1 ? score++ : false;
@@ -290,7 +294,7 @@ var DOMFinder = function(dom) {
         var elements = [];
 
         var domElems = $(node).filter(function(i, elem) {
-            return $(this).text().indexOf(str) !== -1;
+            return $(this).text().toLowerCase().indexOf(str) !== -1;
         });
         domElems.each(function(i, el) {
             elements.push($(this));

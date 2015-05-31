@@ -1,0 +1,19 @@
+{
+  "name": "LeGuepard - Add link",
+  "version": "1.0",
+  "description": "Une extension pour ajouter un produit sur l'API LeGuepard.",
+  "icons": {
+  	"128": "assets/images/icon128.png"
+  },
+  "browser_action": {
+    "default_title": "Nouvelle Collection",
+    "default_popup": "app/app.html"
+  },
+  "background": {
+  	//"scripts": ["main.js"]
+  },
+  "permissions": [
+      "activeTab"
+  ],
+  "manifest_version": 2
+}
